@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { skillsServices } from "./services/skills.services";
+import { userServices } from "./services/user.services";
+import { ActionForm } from "./ActionForm";
 
 const Skill = ({ skills, title }) => {
   return (
@@ -15,20 +17,67 @@ const Skill = ({ skills, title }) => {
 
 function App() {
   const [skills, setSkills] = useState();
+  const [userData, setUserData] = useState();
+  const [isFormShowing, setIsFormShowing] = useState(false);
 
   const getAllSkills = async () => {
     const data = await skillsServices.getAllSkills();
-    // console.log(data);
+    console.log(data);
     setSkills(data);
     return data;
   };
 
+  // const getUserData = async () => {
+  //   const data = await userServices.getUserData();
+  //   console.log(data);
+  //   setUserData(data);
+  //   return data;
+  // };
+
+  const getUserData = () => {
+    const data = userServices.getUserData().then((data) => {
+      console.log(data);
+      setUserData(data);
+    });
+    // console.log(data);
+    // setUserData(data);
+    // return data;
+  };
+
+  const getSkillsArray = () => {
+    // console.log(
+
+    let skillArray = Object.values(skills);
+
+    let newSkill = skillArray[0].concat(skillArray[1], skillArray[2]);
+
+    console.log(newSkill);
+
+    return newSkill;
+  };
+
   useEffect(() => {
+    getUserData();
     getAllSkills();
+
+    // if (skills) {
+    //   getSkillsArray();
+    // }
   }, []);
 
   return (
     <div>
+      {userData && (
+        <div>
+          <p>{userData.username}</p>
+          <p>{userData.level}</p>
+          <button onClick={() => setIsFormShowing(!isFormShowing)}>
+            Add Action
+          </button>
+        </div>
+      )}
+      {skills && <ActionForm skills={getSkillsArray()} />}
+
       {skills && (
         <div>
           <Skill title="Principal" skills={skills.compulsory}></Skill>
