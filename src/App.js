@@ -4,16 +4,16 @@ import { userServices } from "./services/user.services";
 import { ActionForm } from "./ActionForm";
 import "./App.css";
 
-const Skill = ({ skills, title }) => {
-  return (
-    <div>
-      <h3>{title} Skills</h3>
-      {skills.map((skill) => (
-        <p>{skill.name}</p>
-      ))}
-    </div>
-  );
-};
+// const Skill = ({ skills, title }) => {
+//   return (
+//     <div>
+//       <h3>{title} Skills</h3>
+//       {skills.map((skill) => (
+//         <p>{skill.name}</p>
+//       ))}
+//     </div>
+//   );
+// };
 
 function App() {
   const [skills, setSkills] = useState();
@@ -60,15 +60,15 @@ function App() {
   return (
     <div>
       {userData && (
-        <div>
+        <header className="header">
           <p>{userData.username}</p>
-          <p>{userData.level}</p>
-          <button onClick={() => setIsFormShowing(!isFormShowing)}>
+          <p>Level {userData.level}</p>
+          {/* <button onClick={() => setIsFormShowing(!isFormShowing)}>
             Add Action
-          </button>
-        </div>
+          </button> */}
+        </header>
       )}
-      {skills && <ActionForm skills={getSkillsArray()} />}
+      {/* {skills && <ActionForm skills={getSkillsArray()} />} */}
 
       {skills && (
         <div>
