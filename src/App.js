@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import { skillsServices } from "./services/skills.services";
 import { userServices } from "./services/user.services";
 import { ActionForm } from "./ActionForm";
+import "./App.css";
 
 const Skill = ({ skills, title }) => {
   return (
@@ -45,13 +45,9 @@ function App() {
   };
 
   const getSkillsArray = () => {
-    // console.log(
-
     let skillArray = Object.values(skills);
 
     let newSkill = skillArray[0].concat(skillArray[1], skillArray[2]);
-
-    console.log(newSkill);
 
     return newSkill;
   };
@@ -59,10 +55,6 @@ function App() {
   useEffect(() => {
     getUserData();
     getAllSkills();
-
-    // if (skills) {
-    //   getSkillsArray();
-    // }
   }, []);
 
   return (

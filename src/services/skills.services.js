@@ -7,5 +7,5 @@ const getAllSkills = async () => {
 };
 
 export const skillsServices = {
-    getAllSkills,
+  getAllSkills,
 };

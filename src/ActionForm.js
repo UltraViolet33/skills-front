@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { actionsServices } from "./services/actions.services";
 
 export const ActionForm = ({ skills }) => {
   const [inputError, setInputError] = useState(null);
@@ -6,10 +7,7 @@ export const ActionForm = ({ skills }) => {
   const [skill, setSkill] = useState(skills[0].id);
 
   const levels = [1, 2, 3, 4, 5];
-
   const [level, setLevel] = useState(levels[0]);
-
-
 
   const handleNameChange = (event) => {
     const value = event.target.value;
@@ -22,12 +20,20 @@ export const ActionForm = ({ skills }) => {
     }
   };
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    if (name.length >= 5 && skill) {
-      // submit form
-      console.log("ok !!!");
-      window.location = "/test";
+    if (name.length >= 5 && skill && level) {
+      try {
+        const response = await actionsServices.addAction({
+          id_skill: skill,
+          name: name,
+          level: level,
+        });
+
+        console.log(response);
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       setInputError("Input must be at least 5 characters");
     }
@@ -36,7 +42,6 @@ export const ActionForm = ({ skills }) => {
   const handleSkillChange = (event) => {
     setSkill(event.target.value);
   };
-
 
   const handleLevelChange = (event) => {
     setLevel(event.target.value);
@@ -48,7 +53,6 @@ export const ActionForm = ({ skills }) => {
       <input type="text" value={name} onChange={handleNameChange} />
 
       <label>Skill </label>
-
       <select value={skill} onChange={handleSkillChange}>
         {skills.map((la, i) => (
           <option key={i} value={la.id}>
@@ -58,7 +62,6 @@ export const ActionForm = ({ skills }) => {
       </select>
 
       <label>Level </label>
-
       <select value={level} onChange={handleLevelChange}>
         {levels.map((la, i) => (
           <option key={i} value={la}>

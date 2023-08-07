@@ -7,5 +7,5 @@ const getUserData = async () => {
 };
 
 export const userServices = {
-    getUserData,
+  getUserData,
 };
