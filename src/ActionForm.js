@@ -2,23 +2,12 @@ import { useState } from "react";
 import { actionsServices } from "./services/actions.services";
 
 export const ActionForm = ({ skills }) => {
-  const [inputError, setInputError] = useState(null);
+  const [resultMsg, setResultMsg] = useState(null);
   const [name, setName] = useState("");
   const [skill, setSkill] = useState(skills[0].id);
 
   const levels = [1, 2, 3, 4, 5];
   const [level, setLevel] = useState(levels[0]);
-
-  const handleNameChange = (event) => {
-    const value = event.target.value;
-    setName(value);
-
-    if (value.length < 5) {
-      setInputError("Input must be at least 5 characters");
-    } else {
-      setInputError(null);
-    }
-  };
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -31,13 +20,19 @@ export const ActionForm = ({ skills }) => {
         });
 
         console.log(response);
+        setResultMsg("Success");
       } catch (e) {
         console.log(e);
+        setResultMsg(`Error : ${e}`);
       }
     } else {
-      setInputError("Input must be at least 5 characters");
+      setResultMsg("Missing fields");
     }
   }
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
 
   const handleSkillChange = (event) => {
     setSkill(event.target.value);
@@ -52,25 +47,25 @@ export const ActionForm = ({ skills }) => {
       <label>Action Name</label>
       <input type="text" value={name} onChange={handleNameChange} />
 
-      <label>Skill </label>
+      <label>Skill</label>
       <select value={skill} onChange={handleSkillChange}>
-        {skills.map((la, i) => (
-          <option key={i} value={la.id}>
-            {la.name}
+        {skills.map((skill, i) => (
+          <option key={i} value={skill.id}>
+            {skill.name}
           </option>
         ))}
       </select>
 
       <label>Level </label>
       <select value={level} onChange={handleLevelChange}>
-        {levels.map((la, i) => (
-          <option key={i} value={la}>
-            {la}
+        {levels.map((level, i) => (
+          <option key={i} value={level}>
+            {level}
           </option>
         ))}
       </select>
 
-      {inputError && <div style={{ color: "red" }}>{inputError}</div>}
+      {resultMsg && <div style={{ color: "red" }}>{resultMsg}</div>}
       <button type="submit">Submit</button>
     </form>
   );

@@ -3,17 +3,7 @@ import { skillsServices } from "./services/skills.services";
 import { userServices } from "./services/user.services";
 import { ActionForm } from "./ActionForm";
 import "./App.css";
-
-// const Skill = ({ skills, title }) => {
-//   return (
-//     <div>
-//       <h3>{title} Skills</h3>
-//       {skills.map((skill) => (
-//         <p>{skill.name}</p>
-//       ))}
-//     </div>
-//   );
-// };
+import SkillsList from "./components/SkillsList";
 
 function App() {
   const [skills, setSkills] = useState();
@@ -27,22 +17,22 @@ function App() {
     return data;
   };
 
-  // const getUserData = async () => {
-  //   const data = await userServices.getUserData();
-  //   console.log(data);
-  //   setUserData(data);
-  //   return data;
-  // };
-
-  const getUserData = () => {
-    const data = userServices.getUserData().then((data) => {
-      console.log(data);
-      setUserData(data);
-    });
-    // console.log(data);
-    // setUserData(data);
-    // return data;
+  const getUserData = async () => {
+    const data = await userServices.getUserData();
+    console.log(data);
+    setUserData(data);
+    return data;
   };
+
+  // const getUserData = () => {
+  //   const data = userServices.getUserData().then((data) => {
+  //     console.log(data);
+  //     setUserData(data);
+  //   });
+  //   // console.log(data);
+  //   // setUserData(data);
+  //   // return data;
+  // };
 
   const getSkillsArray = () => {
     let skillArray = Object.values(skills);
@@ -63,18 +53,19 @@ function App() {
         <header className="header">
           <p>{userData.username}</p>
           <p>Level {userData.level}</p>
-          {/* <button onClick={() => setIsFormShowing(!isFormShowing)}>
-            Add Action
-          </button> */}
         </header>
       )}
-      {/* {skills && <ActionForm skills={getSkillsArray()} />} */}
+
+      <button onClick={() => setIsFormShowing(!isFormShowing)}>
+        Add Action
+      </button>
+      {skills && isFormShowing && <ActionForm skills={getSkillsArray()} />}
 
       {skills && (
         <div>
-          <Skill title="Principal" skills={skills.compulsory}></Skill>
-          <Skill title="Basic" skills={skills.basic}></Skill>
-          <Skill title="Personal" skills={skills.personal}></Skill>
+          <SkillsList title="Principal" skills={skills.compulsory} />
+          <SkillsList title="Basic" skills={skills.basic} />
+          <SkillsList title="Personal" skills={skills.personal} />
         </div>
       )}
     </div>
