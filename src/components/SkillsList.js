@@ -1,7 +1,7 @@
 import React from "react";
 import Skill from "./Skill";
 
-const SkillsList = ({ skills, title }) => {
+export const SkillsList = ({ skills, title }) => {
   return (
     <div>
       <h3>{title} Skills</h3>
@@ -11,5 +11,3 @@ const SkillsList = ({ skills, title }) => {
     </div>
   );
 };
-
-export default SkillsList;

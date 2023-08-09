@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { skillsServices } from "./services/skills.services";
 import { userServices } from "./services/user.services";
 import { ActionForm } from "./ActionForm";
+import {SkillsList} from "./components/SkillsList";
 import "./App.css";
-import SkillsList from "./components/SkillsList";
 
 function App() {
   const [skills, setSkills] = useState();
@@ -24,16 +24,6 @@ function App() {
     return data;
   };
 
-  // const getUserData = () => {
-  //   const data = userServices.getUserData().then((data) => {
-  //     console.log(data);
-  //     setUserData(data);
-  //   });
-  //   // console.log(data);
-  //   // setUserData(data);
-  //   // return data;
-  // };
-
   const getSkillsArray = () => {
     let skillArray = Object.values(skills);
 
@@ -42,9 +32,16 @@ function App() {
     return newSkill;
   };
 
-  useEffect(() => {
+
+  const fetchData = () => {
     getUserData();
     getAllSkills();
+  }
+
+  useEffect(() => {
+    // getUserData();
+    // getAllSkills();
+    fetchData();
   }, []);
 
   return (
@@ -59,7 +56,7 @@ function App() {
       <button onClick={() => setIsFormShowing(!isFormShowing)}>
         Add Action
       </button>
-      {skills && isFormShowing && <ActionForm skills={getSkillsArray()} />}
+      {skills && isFormShowing && <ActionForm fetchData={fetchData} skills={getSkillsArray()} />}
 
       {skills && (
         <div>

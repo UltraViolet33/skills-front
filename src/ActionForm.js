@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { actionsServices } from "./services/actions.services";
 
-export const ActionForm = ({ skills }) => {
+export const ActionForm = ({ skills, fetchData }) => {
   const [resultMsg, setResultMsg] = useState(null);
   const [name, setName] = useState("");
   const [skill, setSkill] = useState(skills[0].id);
@@ -11,7 +11,7 @@ export const ActionForm = ({ skills }) => {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (name.length >= 5 && skill && level) {
+    if (name.length >= 1 && skill && level) {
       try {
         const response = await actionsServices.addAction({
           id_skill: skill,
@@ -21,6 +21,7 @@ export const ActionForm = ({ skills }) => {
 
         console.log(response);
         setResultMsg("Success");
+        fetchData();
       } catch (e) {
         console.log(e);
         setResultMsg(`Error : ${e}`);
