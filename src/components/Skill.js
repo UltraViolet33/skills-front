@@ -1,10 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { ActionItem } from "./ActionItem";
 
 const Skill = ({ skill }) => {
   const [isTransition, setTransition] = useState(false);
   const [isDisplayed, setIsDisplayed] = useState(false);
+
+  const lastActions = skill.actions.slice(0, 2);
 
   const showActions = () => {
     if (isDisplayed) {
@@ -43,7 +46,9 @@ const Skill = ({ skill }) => {
             : "info-container"
         }
       >
-        hello
+        {lastActions.length > 0
+          ? lastActions.map((action) => <ActionItem action={action} />)
+          : "No action for this skill"}
       </div>
     </div>
   );
