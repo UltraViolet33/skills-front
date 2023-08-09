@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { skillsServices } from "./services/skills.services";
 import { userServices } from "./services/user.services";
 import { ActionForm } from "./ActionForm";
-import {SkillsList} from "./components/SkillsList";
+import { SkillsList } from "./components/SkillsList";
 import "./App.css";
 
 function App() {
   const [skills, setSkills] = useState();
   const [userData, setUserData] = useState();
   const [isFormShowing, setIsFormShowing] = useState(false);
+
+  const [labelBtn, setLabelBtn] = useState("Add Action");
 
   const getAllSkills = async () => {
     const data = await skillsServices.getAllSkills();
@@ -30,11 +32,16 @@ function App() {
     return newSkill;
   };
 
+  const toggleForm = () => {
+    const newLabel = isFormShowing ? "Add Action" : "Hide Form";
+    setLabelBtn(newLabel);
+    setIsFormShowing(!isFormShowing);
+  };
 
   const fetchData = () => {
     getUserData();
     getAllSkills();
-  }
+  };
 
   useEffect(() => {
     fetchData();
@@ -48,12 +55,15 @@ function App() {
           <p>Level {userData.level}</p>
         </header>
       )}
-
-      <button onClick={() => setIsFormShowing(!isFormShowing)}>
-        Add Action
+      <button
+        style={{ display: "block", margin: "auto" }}
+        onClick={() => toggleForm()}
+      >
+        {labelBtn}
       </button>
-      {skills && isFormShowing && <ActionForm fetchData={fetchData} skills={getSkillsArray()} />}
-
+      {skills && isFormShowing && (
+        <ActionForm fetchData={fetchData} skills={getSkillsArray()} />
+      )}
       {skills && (
         <div className="content">
           <SkillsList title="Principal" skills={skills.compulsory} />

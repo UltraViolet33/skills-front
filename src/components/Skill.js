@@ -7,7 +7,11 @@ const Skill = ({ skill }) => {
   const [isTransition, setTransition] = useState(false);
   const [isDisplayed, setIsDisplayed] = useState(false);
 
-  const lastActions = skill.actions.slice(0, 2);
+  const sortedActions = skill.actions.sort(function(x, y){
+    return y.timestamp - x.timestamp;
+  })
+
+  const lastActions = sortedActions.slice(0, 2);
 
   const showActions = () => {
     if (isDisplayed) {
