@@ -26,9 +26,7 @@ function App() {
 
   const getSkillsArray = () => {
     let skillArray = Object.values(skills);
-
     let newSkill = skillArray[0].concat(skillArray[1], skillArray[2]);
-
     return newSkill;
   };
 
@@ -39,8 +37,6 @@ function App() {
   }
 
   useEffect(() => {
-    // getUserData();
-    // getAllSkills();
     fetchData();
   }, []);
 
@@ -59,7 +55,7 @@ function App() {
       {skills && isFormShowing && <ActionForm fetchData={fetchData} skills={getSkillsArray()} />}
 
       {skills && (
-        <div>
+        <div className="content">
           <SkillsList title="Principal" skills={skills.compulsory} />
           <SkillsList title="Basic" skills={skills.basic} />
           <SkillsList title="Personal" skills={skills.personal} />
