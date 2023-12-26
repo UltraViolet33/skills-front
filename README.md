@@ -1,3 +1,5 @@
+Skills front
 
+This is the front app for this api : https://github.com/UltraViolet33/skills-api
 
-Skills front app
+Made with React
